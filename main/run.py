@@ -36,3 +36,9 @@ def save_note():
         print("No content provided. Note not saved.")
         return
     
+    # Prepare markdown content
+    timestamp = now.strftime("%H:%M")
+    md_content = f"\n\n## {timestamp}\n{note_content}"
+    
+if __name__ == "__main__":
+    save_note()
