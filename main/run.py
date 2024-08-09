@@ -36,9 +36,20 @@ def save_note():
         print("No content provided. Note not saved.")
         return
     
-    # Prepare markdown content
+    # Prepare Markdown content
     timestamp = now.strftime("%H:%M")
     md_content = f"\n\n## {timestamp}\n{note_content}"
     
+    # Write to file
+    try:
+        with open(file_path, 'a', encoding='utf-8') as f:
+            # Add date header if file is new
+            if os.stat(file_path).st_size == 0:
+                f.write(f"# {now.strftime('%Y-%m-%d')}\n")
+            f.write(md_content)
+        print(f"Note saved successfully at: {file_path}")
+    except Exception as e:
+        print(f"Error saving note: {str(e)}")
+
 if __name__ == "__main__":
     save_note()
