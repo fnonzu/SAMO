@@ -9,6 +9,10 @@ from datetime import datetime
 # Configuration
 DIARY_ROOT = Path.home() / "diary"
 ANALYSIS_DIR = Path.home() / "diary_analysis"
+STOPWORDS = {
+    'uk': {'та', 'і', 'у', 'на', 'з', 'до', 'не', 'що', 'як', 'але', 'це', 'за', 'для', 'в', 'зо', 'від', 'про'},
+    'en': {'the', 'and', 'to', 'of', 'a', 'in', 'that', 'is', 'it', 'with', 'for', 'on', 'was', 'as', 'at', 'be'}
+}
 
 def load_diary_entries():
     """Load all diary entries from markdown files"""
@@ -59,7 +63,30 @@ def analyze_diary():
         collocations=False
     ).generate_from_frequencies(word_freq)
 
+    plt.figure(figsize=(20, 10))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    plt.savefig(output_dir / "wordcloud.png", bbox_inches='tight')
+    plt.close()
 
+    # Generate frequency chart
+    top_words = word_freq.most_common(20)
+    words, counts = zip(*top_words)
+    
+    plt.figure(figsize=(12, 8))
+    plt.barh(words[::-1], counts[::-1])  # Reverse for descending order
+    plt.title("Top 20 Most Frequent Words")
+    plt.xlabel("Frequency")
+    plt.tight_layout()
+    plt.savefig(output_dir / "frequency_chart.png")
+    plt.close()
+
+    # Save raw frequency data
+    with open(output_dir / "word_frequencies.txt", 'w', encoding='utf-8') as f:
+        for word, count in word_freq.most_common():
+            f.write(f"{word}: {count}\n")
+
+    print(f"Analysis saved to: {output_dir}")
 
 if __name__ == "__main__":
     try:
