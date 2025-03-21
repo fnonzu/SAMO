@@ -5,7 +5,7 @@
 > > -Peter Watts
 
 
-_Is it true that words shows who we are? Can we hack own brain by knowing what we speak and write? Let's see patterns through code and track our life !_
+_A personal journey in organizing thoughts and uncovering writing patterns through code_
 
 ![Sample Word Cloud](https://github.com/user-attachments/assets/8e1b0583-238c-45bc-84c1-bc350c09af16)![wordcloud]
 
